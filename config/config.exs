@@ -11,6 +11,10 @@ config :expay,
   ecto_repos: [Expay.Repo],
   generators: [binary_id: true]
 
+# Configures primary_key as uuid
+config :app, App.Repo, migration_primary_key: [name: :uuid, type: :binary_id]
+config :app, App.Repo, migration_primary_key: false
+
 # Configures the endpoint
 config :expay, ExpayWeb.Endpoint,
   url: [host: "localhost"],
