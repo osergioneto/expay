@@ -16,7 +16,7 @@ defmodule Expay.Accounts.Schemas.Account do
   schema "accounts" do
     field :balance, :integer
     field :number, :string
-    field :agency, :string
+    field :agency, :string, default: "1"
     belongs_to :user, User
 
     timestamps()
