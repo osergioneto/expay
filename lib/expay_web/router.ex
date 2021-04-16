@@ -7,5 +7,7 @@ defmodule ExpayWeb.Router do
 
   scope "/api", ExpayWeb do
     pipe_through :api
+
+    post "/users", UserController, :create
   end
 end
