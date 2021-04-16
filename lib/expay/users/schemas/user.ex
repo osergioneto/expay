@@ -10,7 +10,7 @@ defmodule Expay.Users.Schemas.User do
   alias Expay.Users.Schemas.Password
   alias Expay.Accounts.Schemas.Account
 
-  @required [:name, :email, :document_number]
+  @required [:name, :email, :document_number, :password]
   @optional []
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -19,7 +19,8 @@ defmodule Expay.Users.Schemas.User do
     field :name, :string
     field :email, :string
     field :document_number, :string
-    has_one :password, Password
+    field :password, :string, virtual: true
+    field :password_hash, :string
     has_one :account, Account
 
     timestamps()
