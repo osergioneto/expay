@@ -10,8 +10,6 @@ defmodule ExpayWeb.UserController do
 
   def create(conn, params) do
     with {:ok, %{preload_data: user}} <- Users.create_user(params) do
-      IO.inspect(user, label: "user")
-
       conn
       |> put_status(:created)
       |> render("create.json", user: user)

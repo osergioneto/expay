@@ -17,6 +17,7 @@ defmodule Expay.UsersTest do
 
       {:ok, %{create_user: created_user}} = Users.create_user(params)
       user = Repo.get(User, created_user.id)
+      created_user = %{created_user | password: nil}
 
       assert created_user == user
     end
