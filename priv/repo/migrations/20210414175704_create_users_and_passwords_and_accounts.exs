@@ -7,23 +7,13 @@ defmodule Expay.Repo.Migrations.CreateUsersAndPasswordsAndAccounts do
       add :name, :string
       add :email, :string
       add :document_number, :string
+      add :password_hash, :string
 
       timestamps()
     end
 
     create unique_index(:users, [:email])
     create unique_index(:users, [:document_number])
-
-    create table(:passwords, primary_key: false) do
-      add :id, :binary_id, primary_key: true
-      add :password_hash, :string
-      add :algorithm, :string
-      add :user_id, references(:users, type: :uuid)
-
-      timestamps()
-    end
-
-    create unique_index(:passwords, [:user_id])
 
     create table(:accounts, primary_key: false) do
       add :id, :binary_id, primary_key: true
