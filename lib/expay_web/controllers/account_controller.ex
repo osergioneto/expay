@@ -30,4 +30,12 @@ defmodule ExpayWeb.AccountController do
       |> render("transfer.json", transfer: params)
     end
   end
+
+  def balance(conn, %{"id" => id}) do
+    with {:ok, account} <- Accounts.balance(id) do
+      conn
+      |> put_status(:ok)
+      |> render("balance.json", account: account)
+    end
+  end
 end

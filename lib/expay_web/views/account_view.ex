@@ -46,4 +46,15 @@ defmodule ExpayWeb.AccountView do
       }
     }
   end
+
+  def render("balance.json", %{
+    account: %{agency: agency, number: number, balance: balance, }}) do
+    %{
+      account: %{
+        agency: agency,
+        number: number,
+        balance: balance,
+      }
+    }
+  end
 end

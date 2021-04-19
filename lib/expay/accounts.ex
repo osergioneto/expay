@@ -34,6 +34,13 @@ defmodule Expay.Accounts do
     |> run_transaction()
   end
 
+  def balance(id) do
+    case Repo.get(Account, id) do
+      nil -> {:error, "Account not found"}
+      account -> {:ok, account}
+    end
+  end
+
   defp get_account(repo, number) do
     case repo.get_by(Account, number: number) do
       nil -> {:error, "Account not found"}

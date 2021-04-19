@@ -13,5 +13,6 @@ defmodule ExpayWeb.Router do
     post "/accounts/:number/deposit/:value", AccountController, :deposit
     post "/accounts/:number/withdraw/:value", AccountController, :withdraw
     post "/accounts/transfer", AccountController, :transfer
+    get "/accounts/balance/:id", AccountController, :balance
   end
 end
