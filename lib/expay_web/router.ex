@@ -9,5 +9,7 @@ defmodule ExpayWeb.Router do
     pipe_through :api
 
     post "/users", UserController, :create
+    post "/accounts/:number/deposit/:value", AccountController, :deposit
+    post "/accounts/:number/withdraw/:value", AccountController, :withdraw
   end
 end

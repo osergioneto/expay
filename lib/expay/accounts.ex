@@ -3,7 +3,7 @@ defmodule Expay.Accounts do
   alias Expay.Repo
   alias Expay.Accounts.Schemas.Account
 
-  def deposit(%{number: number, value: value} = params) when is_integer(value) and value > 0 do
+  def deposit(%{"number" => number, "value" => value} = params) do
     Multi.new()
     |> Multi.run(:account, fn repo, _changes -> get_account(repo, number) end)
     |> Multi.run(:deposit, fn repo, changes ->
@@ -15,7 +15,7 @@ defmodule Expay.Accounts do
   end
   def deposit(_params), do: {:error, "Invalid params. Account number should be binary. Value should be >= 0."}
 
-  def withdraw(%{number: number, value: value} = params) when is_integer(value) and value > 0 do
+  def withdraw(%{"number" => number, "value" => value} = params) do
     Multi.new()
     |> Multi.run(:account, fn repo, _changes -> get_account(repo, number) end)
     |> Multi.run(:deposit, fn repo, changes ->
@@ -27,7 +27,7 @@ defmodule Expay.Accounts do
   end
   def withdraw(_params), do: {:error, "Invalid params. Account number should be binary. Value should be >= 0."}
 
-  def transfer(%{to: to, from: from, value: value}) when is_integer(value) and value > 0 do
+  def transfer(%{"to" => to, "from" => from, "value" => value}) do
     Multi.new()
     |> Multi.run(:withdraw, fn repo, changes -> withdraw(%{number: from, value: value}) end)
     |> Multi.run(:deposit, fn repo, changes -> deposit(%{number: to, value: value}) end)
@@ -49,6 +49,7 @@ defmodule Expay.Accounts do
 
   defp operation(%Account{balance: balance}, value, operation) do
     value
+    |> String.to_integer()
     |> handle_operation(balance, operation)
   end
 
