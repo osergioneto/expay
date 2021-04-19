@@ -8,7 +8,6 @@ defmodule ExpayWeb.AccountController do
   action_fallback(ExpayWeb.FallbackController)
 
   def deposit(conn, params) do
-    IO.inspect(params, label: "params")
     with {:ok, %{account: account}} <- Accounts.deposit(params) do
       conn
       |> put_status(:ok)
@@ -17,11 +16,18 @@ defmodule ExpayWeb.AccountController do
   end
 
   def withdraw(conn, params) do
-    IO.inspect(params, label: "params")
     with {:ok, %{account: account}} <- Accounts.withdraw(params) do
       conn
       |> put_status(:ok)
       |> render("withdraw.json", account: account)
+    end
+  end
+
+  def transfer(conn, params) do
+    with {:ok, transfer} <- Accounts.transfer(params) do
+      conn
+      |> put_status(:ok)
+      |> render("transfer.json", transfer: params)
     end
   end
 end

@@ -13,7 +13,7 @@ defmodule Expay.Accounts do
     end)
     |> run_transaction()
   end
-  def deposit(_params), do: {:error, "Invalid params. Account number should be binary. Value should be >= 0."}
+  def deposit(_params), do: {:error, "deposit/1. Invalid params. Account number should be binary. Value should be >= 0."}
 
   def withdraw(%{"number" => number, "value" => value} = params) do
     Multi.new()
@@ -25,12 +25,12 @@ defmodule Expay.Accounts do
     end)
     |> run_transaction()
   end
-  def withdraw(_params), do: {:error, "Invalid params. Account number should be binary. Value should be >= 0."}
+  def withdraw(_params), do: {:error, "withdraw/1. Invalid params. Account number should be binary. Value should be >= 0."}
 
   def transfer(%{"to" => to, "from" => from, "value" => value}) do
     Multi.new()
-    |> Multi.run(:withdraw, fn repo, changes -> withdraw(%{number: from, value: value}) end)
-    |> Multi.run(:deposit, fn repo, changes -> deposit(%{number: to, value: value}) end)
+    |> Multi.run(:withdraw, fn repo, changes -> withdraw(%{"number" => from, "value" => value}) end)
+    |> Multi.run(:deposit, fn repo, changes -> deposit(%{"number" => from, "value" => value}) end)
     |> run_transaction()
   end
 
