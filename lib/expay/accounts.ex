@@ -27,6 +27,12 @@ defmodule Expay.Accounts do
   end
   def withdraw(_params), do: {:error, "Invalid params. Account number should be binary. Value should be >= 0."}
 
+  def transfer(%{to: to, from: from, value: value}) when is_integer(value) and value > 0 do
+    Multi.new()
+    |> Multi.run(:withdraw, fn repo, changes -> withdraw(%{number: from, value: value}) end)
+    |> Multi.run(:deposit, fn repo, changes -> deposit(%{number: to, value: value}) end)
+    |> run_transaction()
+  end
 
   defp get_account(repo, number) do
     case repo.get_by(Account, number: number) do
@@ -53,12 +59,9 @@ defmodule Expay.Accounts do
 
   defp update_account(value, repo, account) do
     params = %{balance: value}
-    IO.inspect(params)
-
 
     account
     |> Account.changeset(params)
-    |> IO.inspect()
     |> repo.update()
   end
 
