@@ -3,13 +3,13 @@ defmodule ExpayWeb.UserView do
   alias Expay.Accounts.Schemas.Account
 
   def render("create.json", %{
-    user: %{
-      account: %Account{number: number, agency: agency, balance: balance},
-      id: user_id,
-      name: name,
-      email: email
-      }
-    }) do
+        user: %{
+          account: %{number: number, agency: agency, balance: balance},
+          id: user_id,
+          name: name,
+          email: email
+        }
+      }) do
     %{
       message: "User created",
       user: %{
