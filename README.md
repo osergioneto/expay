@@ -24,9 +24,6 @@
 ## 📋 Project
 
 - Simply API about money deposit, withdraw and transfer between accounts.
-<br><br>
-
-<br>
 
 ## 💻 How to use
 
