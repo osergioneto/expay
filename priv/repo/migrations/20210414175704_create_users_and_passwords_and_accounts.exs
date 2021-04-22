@@ -17,7 +17,7 @@ defmodule Expay.Repo.Migrations.CreateUsersAndPasswordsAndAccounts do
 
     create table(:accounts, primary_key: false) do
       add :id, :binary_id, primary_key: true
-      add :balance, :integer
+      add :balance, :bigint
       add :number, :string
       add :agency, :string
       add :user_id, references(:users, type: :uuid)
